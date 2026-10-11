@@ -1,0 +1,14 @@
+---
+title: "Summer_2025 Analysis"
+author: "Samantha Cotton"
+output: 
+  html_document: 
+    theme: cerulean
+date: "2026-10-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = TRUE, warning = TRUE)
+```
+
+
