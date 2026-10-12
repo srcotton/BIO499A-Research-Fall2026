@@ -11,4 +11,49 @@ date: "2026-10-11"
 knitr::opts_chunk$set(echo = TRUE, message = TRUE, warning = TRUE)
 ```
 
+```{r}
+library(readxl)
+```
+
+```{r}
+summer_25 <- read_xlsx("2025 Summer Data .xlsx", sheet = 1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+summer_25 <- janitor::clean_names(summer_25)
+```
+
+```{r}
+summer_25 <- summer_25 %>% 
+  filter(!species_name %in% c("Summary", "Summary:")) %>% 
+  select(-total_minutes_called) %>% 
+  fill(c(site_name, species_name, date, scientific_name), .direction = "down")
+```
+
+```{r}
+summer_25$time_hour_at_which_heard <- summer_25$date + (summer_25$time_hour_at_which_heard - as.POSIXct(trunc(summer_25$time_hour_at_which_heard, units="days")))
+```
+
+```{r}
+library(lubridate)
+library(hms)
+```
+
+```{r}
+summer_25 <- summer_25 %>% 
+  mutate(time = as_hms(time_hour_at_which_heard)) %>% 
+  select(-time_hour_at_which_heard) %>% 
+  relocate(time, .after = "date") %>% 
+  rename(c(five_min = x5_minute_block, 
+           total_species_calling = different_species_calling_at_the_same_time))
+```
+
+
+
+
 
