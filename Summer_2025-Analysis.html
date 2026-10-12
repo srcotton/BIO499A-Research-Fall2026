@@ -357,29 +357,7 @@ display: none;
 </div>
 
 
-<pre class="r"><code>library(readxl)</code></pre>
-<pre class="r"><code>summer_25 &lt;- read_xlsx(&quot;2025 Summer Data .xlsx&quot;, sheet = 1)</code></pre>
-<pre class="r"><code>library(tidyverse)
-library(janitor)</code></pre>
-<pre class="r"><code>summer_25 &lt;- janitor::clean_names(summer_25)</code></pre>
-<pre class="r"><code>summer_25 &lt;- summer_25 %&gt;% 
-  filter(!species_name %in% c(&quot;Summary&quot;, &quot;Summary:&quot;)) %&gt;% 
-  select(-total_minutes_called) %&gt;% 
-  fill(c(site_name, species_name, date, scientific_name), .direction = &quot;down&quot;)</code></pre>
-<pre class="r"><code>summer_25$time_hour_at_which_heard &lt;- summer_25$date + (summer_25$time_hour_at_which_heard - as.POSIXct(trunc(summer_25$time_hour_at_which_heard, units=&quot;days&quot;)))</code></pre>
-<pre class="r"><code>library(lubridate)
-library(hms)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;hms&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:lubridate&#39;:
-## 
-##     hms</code></pre>
-<pre class="r"><code>summer_25 &lt;- summer_25 %&gt;% 
-  mutate(time = as_hms(time_hour_at_which_heard)) %&gt;% 
-  select(-time_hour_at_which_heard) %&gt;% 
-  relocate(time, .after = &quot;date&quot;) %&gt;% 
-  rename(c(five_min = x5_minute_block, 
-           total_species_calling = different_species_calling_at_the_same_time))</code></pre>
+
 
 
 
