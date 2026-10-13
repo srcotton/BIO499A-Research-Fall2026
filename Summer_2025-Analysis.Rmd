@@ -1,10 +1,10 @@
 ---
-title: "Summer_2025 Analysis"
+title: "Summer 2025 Analysis"
 author: "Samantha Cotton"
 output: 
   html_document: 
     theme: cerulean
-date: "2026-10-11"
+date: "2026-10-13"
 ---
 
 ```{r setup, include=FALSE}
@@ -28,7 +28,7 @@ library(janitor)
 summer_25 <- janitor::clean_names(summer_25)
 ```
 
-```{r}
+```{r include=FALSE}
 summer_25 <- summer_25 %>% 
   mutate(site_name = case_when(site_name == "Micro Pond" ~ "Micropond", 
                                .default = site_name)) %>% 
@@ -104,6 +104,10 @@ summer_25 %>%
             .groups = "drop_last")
 ```
 
+**From this summary table, we can conclude that August 4th had the highest amount of total call minutes of the Green Frog at 70 total minutes, followed by August 3rd and 5th at 53 minutes each, all recorded at the Micropond site.** 
+
+**We can conclude that the typical (median) hour block that Green Frogs have maximum call activity, measured in total minutes of recorded calls, is the 6:30 a.m. hour.**
+
 ### Cope's Gray Frog Analysis
 
 ```{r warning=FALSE}
@@ -127,6 +131,10 @@ summer_25 %>%
             median_hour = median(hour_block),
             .groups = "drop_last")
 ```
+
+**From this summary table, we can conclude that August 6th had the highest amount of recorded call minutes of the Cope's Gray Frog at 25 total minutes, followed by August 7th and 8th at 11 minutes and 10 minutes, respectively; August 6th and 7th's observations were recorded at the Retention Pond site, and August 8th's at the Micropond site.** 
+
+**We can conclude that the typical (median) hour block that Cope's Gray Frogs have maximum call activity, measured in total minutes of recorded calls, is the 5:00 a.m. hour.**
 
 ### Bullfrog Analysis
 
@@ -153,6 +161,10 @@ summer_25 %>%
             .groups = "drop_last")
 ```
 
+**From this summary table, we can conclude that August 5th had the highest amount of recorded call minutes of the Bullfrog at 27 total minutes, followed by August 8th at 26 minutes; all observations of the Bullfrog calls were recorded at the Micropond site.** 
+
+**We can conclude that the typical (median) hour block that Bullfrogs have maximum call activity, measured in total minutes of recorded calls, is the 10:00 a.m. hour.**
+
 ### Squirrel Treefrog Analysis
 
 ```{r}
@@ -176,6 +188,10 @@ summer_25 %>%
             median_hour = median(hour_block, na.rm = TRUE),
             .groups = "drop_last")
 ```
+
+**From this summary table, we can conclude that June 6th had the highest amount of recorded call minutes of the Squirrel treefrog at 28 total minutes, followed by June 7th at 12 minutes; both were recorded at the Retention Pond site.** 
+
+**We can conclude that the typical (median) hour block that Squirrel treefrogs have maximum call activity, measured in total minutes of recorded calls, is the 9:00 p.m. hour.**
 
 ### Green Treefrog Analysis
 
@@ -201,6 +217,31 @@ summer_25 %>%
             .groups = "drop_last")
 ```
 
+**From this summary table, we can conclude that June 6th had the highest amount of recorded call minutes of the Green Treefrog at 25 total minutes, followed by June 7th at 5 minutes; both were recorded at the Retention Pond site.** 
+
+**We can conclude that the typical (median) hour block that Green Treefrogs have maximum call activity, measured in total minutes of recorded calls, is the 9:00 p.m. hour.**
+
+## Comparing Across Site Locations
+
+```{r}
+summer_25 %>% 
+  group_by(site_name) %>% 
+  summarize(total_recordings = n()) %>% 
+  ggplot(mapping = aes(x = site_name, 
+                       y = total_recordings, 
+                       fill = site_name)) + 
+  geom_col() + 
+  labs(x = "Site Location", 
+       y = "Total Count (n)", 
+       title = "Total Count of Recorded Calls by Site Location at Meredith College",
+       subtitle = "Across Five Anuran Species",
+       fill = NULL) + 
+  theme(legend.position = "none") + 
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
+```
+
+**From this visualization, we can conclude the Micropond site had more observations of recorded calls by identified anuran species compared to the Retention Pond site.**
+
 ## Comparing Across Species
 
 ```{r}
@@ -224,32 +265,41 @@ summer_25 %>%
   scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
 
+**From this visualization, we can conclude that across the five recorded species, the Green Frog had the highest count of recorded calling minutes, with most observations having been recorded at the Micropond site. The total calling minutes of the Bullfrog was the second highest, but observations occurred solely at the Micropond site. The Green Treefrog appears to have the smallest amount of recorded calling minutes across the five species; along with the Squirrel treefrog and the Cope's Gray frog, it had more recorded calling minutes at the Retention Pond site than the Micropond site.**
+
 
 ```{r warning=FALSE}
 summer_25 %>% 
   filter(site_name == "Retention Pond") %>% 
-  group_by(date, hour_block) %>% 
+  group_by(hour_block) %>% 
+  summarize(median_calls = median(total_species_calling)) %>% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
-                                  y = total_species_calling)) + 
+                                  y = median_calls)) + 
   geom_col(position = "Dodge", fill = 'maroon') + 
   labs(x = "Hour of Day", 
        y = "Number of Species", 
-       title = "Number of Different Anuran Species Calling By Hour",
+       title = "Median Number of Different Anuran Species Calling By Hour",
        subtitle = "Recorded at Retention Pond Site at Meredith College")
 ```
 
+**Gaps in certain hour blocks of this visualization is due to an absence of data for that hour block.**
 
 ```{r warning=FALSE}
 summer_25 %>% 
   filter(site_name == "Micropond") %>% 
-  group_by(date, hour_block) %>% 
+  group_by(hour_block) %>% 
+  summarize(median_calls = median(total_species_calling, na.rm = TRUE)) %>% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
-                                  y = total_species_calling)) + 
+                                  y = median_calls)) + 
   geom_col(position = "Dodge", fill = 'lightskyblue2') + 
   labs(x = "Hour of Day", 
        y = "Number of Species", 
-       title = "Number of Different Anuran Species Calling By Hour",
+       title = "Median Number of Different Anuran Species Calling By Hour",
        subtitle = "Recorded at Micropond Site at Meredith College")
 ```
+
+**Gaps in certain hour blocks of this visualization is due to an absence of data for that hour block.**
+
+## Thank you!!
 
 
