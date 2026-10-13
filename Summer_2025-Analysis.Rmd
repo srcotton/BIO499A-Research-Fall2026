@@ -221,6 +221,35 @@ summer_25 %>%
        fill = "Site Location",
        title = "Total Minutes of Recorded Calls Across Anuran Species", 
        subtitle = "Collected From Two Site Locations at Meredith College") + 
-  scale_fill_manual(values = c('maroon', 'lightskyblue2'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
+
+
+```{r warning=FALSE}
+summer_25 %>% 
+  filter(site_name == "Retention Pond") %>% 
+  group_by(date, hour_block) %>% 
+  ggplot(summer_25, mapping = aes(x = hour_block, 
+                                  y = total_species_calling)) + 
+  geom_col(position = "Dodge", fill = 'maroon') + 
+  labs(x = "Hour of Day", 
+       y = "Number of Species", 
+       title = "Number of Different Anuran Species Calling By Hour",
+       subtitle = "Recorded at Retention Pond Site at Meredith College")
+```
+
+
+```{r warning=FALSE}
+summer_25 %>% 
+  filter(site_name == "Micropond") %>% 
+  group_by(date, hour_block) %>% 
+  ggplot(summer_25, mapping = aes(x = hour_block, 
+                                  y = total_species_calling)) + 
+  geom_col(position = "Dodge", fill = 'lightskyblue2') + 
+  labs(x = "Hour of Day", 
+       y = "Number of Species", 
+       title = "Number of Different Anuran Species Calling By Hour",
+       subtitle = "Recorded at Micropond Site at Meredith College")
+```
+
 
