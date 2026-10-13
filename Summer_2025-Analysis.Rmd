@@ -36,24 +36,34 @@ summer_25 <- summer_25 %>%
 ```
 
 ```{r include=FALSE}
+library(lubridate)
+library(hms)
+```
+
+```{r include=FALSE}
+summer_25 <- summer_25 %>% 
+  mutate(hour = floor_date(time_hour_at_which_heard, "hour"))
+```
+
+
+```{r include=FALSE}
 summer_25$time_hour_at_which_heard <- summer_25$date + (summer_25$time_hour_at_which_heard - as.POSIXct(trunc(summer_25$time_hour_at_which_heard, units="days")))
 ```
 
 ```{r include=FALSE}
-library(lubridate)
-library(hms)
+summer_25$hour <- summer_25$date + (summer_25$hour - as.POSIXct(trunc(summer_25$hour, units="days")))
 ```
 
 
 ```{r include=FALSE}
 summer_25 <- summer_25 %>% 
-  mutate(time = as_hms(time_hour_at_which_heard)) %>% 
-  select(-time_hour_at_which_heard) %>% 
-  relocate(time, .after = "date") %>% 
+  mutate(time_recorded = as_hms(time_hour_at_which_heard), 
+         hour_block = as_hms(hour)) %>% 
+  select(-c(time_hour_at_which_heard, hour)) %>% 
+  relocate(time_recorded, .after = "date") %>% 
   rename(c(five_min = x5_minute_block, 
            total_species_calling = different_species_calling_at_the_same_time))
 ```
-
 
 
 
