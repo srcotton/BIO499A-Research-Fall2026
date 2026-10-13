@@ -28,6 +28,14 @@ library(janitor)
 summer_25 <- janitor::clean_names(summer_25)
 ```
 
+```{r}
+summer_25 <- summer_25 %>% 
+  mutate(site_name = case_when(site_name == "Micro Pond" ~ "Micropond", 
+                               .default = site_name)) %>% 
+  mutate(species_name = case_when(species_name == "Green frog" ~ "Green Frog", 
+                                  .default = species_name))
+```
+
 ```{r include=FALSE}
 summer_25 <- summer_25 %>% 
   filter(!species_name %in% c("Summary", "Summary:")) %>% 
@@ -44,7 +52,6 @@ library(hms)
 summer_25 <- summer_25 %>% 
   mutate(hour = floor_date(time_hour_at_which_heard, "hour"))
 ```
-
 
 ```{r include=FALSE}
 summer_25$time_hour_at_which_heard <- summer_25$date + (summer_25$time_hour_at_which_heard - as.POSIXct(trunc(summer_25$time_hour_at_which_heard, units="days")))
@@ -77,7 +84,7 @@ summer_25 <- summer_25 %>%
 
 ```{r warning=FALSE}
 summer_25 %>% 
-  filter(species_name %in% c("Green Frog", "Green frog")) %>% 
+  filter(species_name == "Green Frog") %>% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
                                   fill = site_name)) + 
   geom_bar() + 
@@ -86,12 +93,12 @@ summer_25 %>%
        title = "Recorded Minutes of Green Frog Calls by Hour of Day", 
        subtitle = "Across Two Site Locations at Meredith College",
        fill = "Site Location") + 
-  scale_fill_manual(values = c('maroon', 'palegreen3'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
 
 ```{r}
 summer_25 %>% 
-  filter(species_name %in% c("Green Frog", "Green frog")) %>% 
+  filter(species_name == "Green Frog") %>% 
   summarize(mins_called = n(),
             median_hour = median(hour_block), 
             .groups = "drop_last")
@@ -110,7 +117,7 @@ summer_25 %>%
        title = "Recorded Minutes of Cope's Gray Frog Calls by Hour of Day", 
        subtitle = "Across Two Site Locations at Meredith College",
        fill = "Site Location") + 
-  scale_fill_manual(values = c('maroon', 'palegreen3'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
 
 ```{r}
@@ -135,7 +142,7 @@ summer_25 %>%
        subtitle = "At Micropond Site at Meredith College",
        fill = NULL) + 
   theme(legend.position = "none") + 
-  scale_fill_manual(values = c('maroon', 'palegreen3'))
+  scale_fill_manual(values = c('maroon', 'lightskyblue2'))
 ```
 
 ```{r}
@@ -159,7 +166,7 @@ summer_25 %>%
        title = "Recorded Minutes of Squirrel treefrog Calls by Hour of Day", 
        subtitle = "Across Two Site Locations at Meredith College",
        fill = "Site Location") + 
-  scale_fill_manual(values = c('maroon', 'palegreen3'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
 
 ```{r}
@@ -183,7 +190,7 @@ summer_25 %>%
        title = "Recorded Minutes of Green treefrog Calls by Hour of Day", 
        subtitle = "Across Two Site Locations at Meredith College",
        fill = "Site Location") + 
-  scale_fill_manual(values = c('maroon', 'palegreen3'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
 ```
 
 ```{r}
@@ -204,10 +211,16 @@ summer_25 %>%
   summarize(total_mins_called = sum(total_mins), 
             .groups = "drop_last") %>% 
   ungroup() %>% 
+  mutate(species_name = fct_reorder(species_name, desc(total_mins_called))) %>% 
   ggplot(summer_25, mapping = aes(x = total_mins_called,
                                   y = species_name,
                                   fill = site_name)) + 
   geom_col(position = "Dodge") + 
-  scale_fill_manual(values = c('lightskyblue2', 'maroon', 'palegreen3'))
+  labs(x = "Total Minutes", 
+       y = NULL, 
+       fill = "Site Location",
+       title = "Total Minutes of Recorded Calls Across Anuran Species", 
+       subtitle = "Collected From Two Site Locations at Meredith College") + 
+  scale_fill_manual(values = c('maroon', 'lightskyblue2'))
 ```
 
