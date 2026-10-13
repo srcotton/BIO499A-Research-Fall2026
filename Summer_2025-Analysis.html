@@ -359,6 +359,8 @@ display: none;
 
 <div id="individual-species-analysis" class="section level2">
 <h2>Individual Species Analysis</h2>
+<div id="green-frog-analysis" class="section level3">
+<h3>Green Frog Analysis</h3>
 <pre class="r"><code>summer_25 %&gt;% 
   filter(species_name %in% c(&quot;Green Frog&quot;, &quot;Green frog&quot;)) %&gt;% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -390,6 +392,9 @@ display: none;
 ##  8 Micropond      Green Frog   2025-08-08 00:00:00          32 03:00      
 ##  9 Retention Pond Green frog   2025-06-06 00:00:00           2 03:30      
 ## 10 Retention Pond Green frog   2025-06-07 00:00:00           3 04:00</code></pre>
+</div>
+<div id="copes-gray-frog-analysis" class="section level3">
+<h3>Cope’s Gray Frog Analysis</h3>
 <pre class="r"><code>summer_25 %&gt;% 
   filter(species_name == &quot;Cope&#39;s Gray&quot;) %&gt;% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -418,6 +423,9 @@ display: none;
 ## 5 Retention Pond Cope&#39;s Gray  2025-06-05 00:00:00           1 13:00      
 ## 6 Retention Pond Cope&#39;s Gray  2025-06-06 00:00:00          25 05:00      
 ## 7 Retention Pond Cope&#39;s Gray  2025-06-07 00:00:00          11 01:00</code></pre>
+</div>
+<div id="bullfrog-analysis" class="section level3">
+<h3>Bullfrog Analysis</h3>
 <pre class="r"><code>summer_25 %&gt;% 
   filter(species_name == &quot;Bullfrog&quot;) %&gt;% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -444,6 +452,9 @@ display: none;
 ## 2 Micropond Bullfrog     2025-08-06 00:00:00          25 11:00      
 ## 3 Micropond Bullfrog     2025-08-07 00:00:00          25 11:00      
 ## 4 Micropond Bullfrog     2025-08-08 00:00:00          26 11:00</code></pre>
+</div>
+<div id="squirrel-treefrog-analysis" class="section level3">
+<h3>Squirrel Treefrog Analysis</h3>
 <pre class="r"><code>summer_25 %&gt;% 
   filter(species_name == &quot;Squirrel treefrog&quot;) %&gt;% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -472,6 +483,9 @@ display: none;
 ## 5 Retention Pond Squirrel treefrog 2025-06-05 00:00:00           2 12:30      
 ## 6 Retention Pond Squirrel treefrog 2025-06-06 00:00:00          28 21:00      
 ## 7 Retention Pond Squirrel treefrog 2025-06-07 00:00:00          12 01:00</code></pre>
+</div>
+<div id="green-treefrog-analysis" class="section level3">
+<h3>Green Treefrog Analysis</h3>
 <pre class="r"><code>summer_25 %&gt;% 
   filter(species_name == &quot;Green treefrog&quot;) %&gt;% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -499,6 +513,7 @@ display: none;
 ## 4 Micropond      Green treefrog 2025-08-08 00:00:00           1 02:00      
 ## 5 Retention Pond Green treefrog 2025-06-06 00:00:00          25 21:00      
 ## 6 Retention Pond Green treefrog 2025-06-07 00:00:00           5 00:00</code></pre>
+</div>
 </div>
 <div id="comparing-across-species" class="section level2">
 <h2>Comparing Across Species</h2>

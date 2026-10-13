@@ -73,6 +73,8 @@ summer_25 <- summer_25 %>%
 
 ## Individual Species Analysis
 
+### Green Frog Analysis
+
 ```{r warning=FALSE}
 summer_25 %>% 
   filter(species_name %in% c("Green Frog", "Green frog")) %>% 
@@ -95,6 +97,7 @@ summer_25 %>%
             .groups = "drop_last")
 ```
 
+### Cope's Gray Frog Analysis
 
 ```{r warning=FALSE}
 summer_25 %>% 
@@ -117,6 +120,8 @@ summer_25 %>%
             median_hour = median(hour_block),
             .groups = "drop_last")
 ```
+
+### Bullfrog Analysis
 
 ```{r warning=FALSE}
 summer_25 %>% 
@@ -141,6 +146,7 @@ summer_25 %>%
             .groups = "drop_last")
 ```
 
+### Squirrel Treefrog Analysis
 
 ```{r}
 summer_25 %>% 
@@ -163,6 +169,8 @@ summer_25 %>%
             median_hour = median(hour_block, na.rm = TRUE),
             .groups = "drop_last")
 ```
+
+### Green Treefrog Analysis
 
 ```{r}
 summer_25 %>% 
