@@ -85,6 +85,13 @@ summer_25 %>%
   scale_fill_manual(values = c('maroon', 'palegreen3'))
 ```
 
+```{r}
+summer_25 %>% 
+  filter(species_name %in% c("Green Frog", "Green frog")) %>% 
+  summarize(mins_called = n(),
+            median_hour = median(hour_block))
+```
+
 
 ```{r warning=FALSE}
 summer_25 %>% 
@@ -100,5 +107,81 @@ summer_25 %>%
   scale_fill_manual(values = c('maroon', 'palegreen3'))
 ```
 
+```{r}
+summer_25 %>% 
+  filter(species_name == "Cope's Gray") %>% 
+  summarize(mins_called = n(), 
+            median_hour = median(hour_block))
+```
 
+```{r warning=FALSE}
+summer_25 %>% 
+  filter(species_name == "Bullfrog") %>% 
+  ggplot(summer_25, mapping = aes(x = hour_block, 
+                                  fill = site_name)) + 
+  geom_bar() + 
+  labs(x = "Hour of Day", 
+       y = "Minutes",
+       title = "Recorded Minutes of Bullfrog Calls by Hour of Day", 
+       subtitle = "At Micropond Site at Meredith College",
+       fill = NULL) + 
+  theme(legend.position = "none") + 
+  scale_fill_manual(values = c('maroon', 'palegreen3'))
+```
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Bullfrog") %>% 
+  summarize(mins_called = n(), 
+            median_hour = median(hour_block, na.rm = TRUE))
+```
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Bullfrog") %>% 
+  count(hour_block)
+```
+
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Squirrel treefrog") %>% 
+  ggplot(summer_25, mapping = aes(x = hour_block, 
+                                  fill = site_name)) + 
+  geom_bar() + 
+  labs(x = "Hour of Day", 
+       y = "Minutes",
+       title = "Recorded Minutes of Squirrel treefrog Calls by Hour of Day", 
+       subtitle = "Across Two Site Locations at Meredith College",
+       fill = "Site Location") + 
+  scale_fill_manual(values = c('maroon', 'palegreen3'))
+```
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Squirrel treefrog") %>% 
+  summarize(mins_called = n(), 
+            median_hour = median(hour_block, na.rm = TRUE))
+```
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Green treefrog") %>% 
+  ggplot(summer_25, mapping = aes(x = hour_block, 
+                                  fill = site_name)) + 
+  geom_bar() + 
+  labs(x = "Hour of Day", 
+       y = "Minutes",
+       title = "Recorded Minutes of Green treefrog Calls by Hour of Day", 
+       subtitle = "Across Two Site Locations at Meredith College",
+       fill = "Site Location") + 
+  scale_fill_manual(values = c('maroon', 'palegreen3'))
+```
+
+```{r}
+summer_25 %>% 
+  filter(species_name == "Green treefrog") %>% 
+  summarize(mins_called = n(), 
+            median_hour = median(hour_block))
+```
 
