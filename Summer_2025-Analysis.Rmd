@@ -71,6 +71,8 @@ summer_25 <- summer_25 %>%
   mutate(total_min = n()) 
 ```
 
+## Individual Species Analysis
+
 ```{r warning=FALSE}
 summer_25 %>% 
   filter(species_name %in% c("Green Frog", "Green frog")) %>% 
@@ -89,7 +91,8 @@ summer_25 %>%
 summer_25 %>% 
   filter(species_name %in% c("Green Frog", "Green frog")) %>% 
   summarize(mins_called = n(),
-            median_hour = median(hour_block))
+            median_hour = median(hour_block), 
+            .groups = "drop_last")
 ```
 
 
@@ -111,7 +114,8 @@ summer_25 %>%
 summer_25 %>% 
   filter(species_name == "Cope's Gray") %>% 
   summarize(mins_called = n(), 
-            median_hour = median(hour_block))
+            median_hour = median(hour_block),
+            .groups = "drop_last")
 ```
 
 ```{r warning=FALSE}
@@ -133,13 +137,8 @@ summer_25 %>%
 summer_25 %>% 
   filter(species_name == "Bullfrog") %>% 
   summarize(mins_called = n(), 
-            median_hour = median(hour_block, na.rm = TRUE))
-```
-
-```{r}
-summer_25 %>% 
-  filter(species_name == "Bullfrog") %>% 
-  count(hour_block)
+            median_hour = median(hour_block, na.rm = TRUE), 
+            .groups = "drop_last")
 ```
 
 
@@ -161,7 +160,8 @@ summer_25 %>%
 summer_25 %>% 
   filter(species_name == "Squirrel treefrog") %>% 
   summarize(mins_called = n(), 
-            median_hour = median(hour_block, na.rm = TRUE))
+            median_hour = median(hour_block, na.rm = TRUE),
+            .groups = "drop_last")
 ```
 
 ```{r}
@@ -182,6 +182,24 @@ summer_25 %>%
 summer_25 %>% 
   filter(species_name == "Green treefrog") %>% 
   summarize(mins_called = n(), 
-            median_hour = median(hour_block))
+            median_hour = median(hour_block),
+            .groups = "drop_last")
+```
+
+## Comparing Across Species
+
+```{r}
+summer_25 %>% 
+  group_by(site_name, species_name, date) %>% 
+  summarize(total_mins = n(), 
+            .groups = "drop_last") %>% 
+  summarize(total_mins_called = sum(total_mins), 
+            .groups = "drop_last") %>% 
+  ungroup() %>% 
+  ggplot(summer_25, mapping = aes(x = total_mins_called,
+                                  y = species_name,
+                                  fill = site_name)) + 
+  geom_col(position = "Dodge") + 
+  scale_fill_manual(values = c('lightskyblue2', 'maroon', 'palegreen3'))
 ```
 
