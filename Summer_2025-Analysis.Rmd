@@ -80,9 +80,9 @@ summer_25 <- summer_25 %>%
 
 ## Individual Species Analysis
 
-### Green Frog Analysis
+### *Dryophytes chrysoscelis* Analysis
 
-```{r warning=FALSE}
+```{r echo=FALSE, warning=FALSE}
 summer_25 %>% 
   filter(species_name == "Green Frog") %>% 
   ggplot(summer_25, mapping = aes(x = hour_block, 
@@ -90,10 +90,11 @@ summer_25 %>%
   geom_bar() + 
   labs(x = "Hour of Day", 
        y = "Minutes",
-       title = "Recorded Minutes of Green Frog Calls by Hour of Day", 
+       title = "Recorded Minutes of Dryophytes chrysoscelis Calls by Hour of Day", 
        subtitle = "Across Two Site Locations at Meredith College",
        fill = "Site Location") + 
-  scale_fill_manual(values = c('lightskyblue2', 'maroon'))
+  scale_fill_manual(values = c('lightskyblue2', 'maroon')) + 
+  theme_minimal()
 ```
 
 ```{r}
